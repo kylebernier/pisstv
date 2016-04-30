@@ -1,0 +1,27 @@
+#!/bin/bash
+
+cd /home/pi/pisstv
+
+python /home/pi/Scripts/pushtotalk_off.py
+
+sleep 15s
+
+while true;
+do
+	raspistill -t 1000 --width 2560 --height 1920 -n -e png -o ./tmp/image.png
+	DATE=$(date +"%Y-%m-%d_%H-%M-%S")
+	cp ./tmp/image.png ./images/$DATE.png
+	convert ./tmp/image.png -resize 320x240 ./tmp/image.png
+	convert ./tmp/image.png -font avantgarde-book -pointsize 36 -fill blue -stroke yellow -strokewidth 2 -annotate +5+36 'KC1FBH' ./tmp/image.png
+	./pisstv ./tmp/image.png 22050
+	python /home/pi/Scripts/pushtotalk_on.py
+	aplay ./tmp/image.png.wav
+	python /home/pi/Scripts/pushtotalk_off.py
+	for a in {1..24}
+	do
+		raspistill -t 1000 --width 2560 --height 1920 -n -e png -o ./tmp/image.png
+		DATE=$(date +"%Y-%m-%d_%H-%M-%S")
+		cp ./tmp/image.png ./images/$DATE.png
+		sleep 5s
+	done
+done
