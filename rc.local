@@ -21,6 +21,4 @@ fi
 
 sudo python /home/pi/Scripts/shutdown_pi.py &
 
-#sudo python /home/pi/Scripts/toggle_cam.py &
-
 exit 0
