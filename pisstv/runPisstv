@@ -8,7 +8,7 @@ sleep 15s
 
 while true;
 do
-	raspistill -t 1000 --width 2560 --height 1920 -n -e png -o ./tmp/image.png
+	raspistill -t 3000 --width 2560 --height 1920 -n -e png -o ./tmp/image.png
 	DATE=$(date +"%Y-%m-%d_%H-%M-%S")
 	cp ./tmp/image.png ./images/$DATE.png
 	convert ./tmp/image.png -resize 320x240 ./tmp/image.png
@@ -17,10 +17,10 @@ do
 	python /home/pi/Scripts/pushtotalk_on.py
 	aplay ./tmp/image.png.wav
 	python /home/pi/Scripts/pushtotalk_off.py
-	for a in {1..24}
+	for a in {1..15}
 	do
-		raspistill -t 1000 --width 2560 --height 1920 -n -e png -o ./tmp/image.png
-		DATE=$(date +"%Y-%m-%d_%H-%M-%S")
+		raspistill -t 3000 --width 2560 --height 1920 -n -e png -o ./tmp/image.png
+        	DATE=$(date +"%Y-%m-%d_%H-%M-%S")
 		cp ./tmp/image.png ./images/$DATE.png
 		sleep 5s
 	done
